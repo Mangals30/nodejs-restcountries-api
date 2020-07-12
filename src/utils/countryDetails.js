@@ -6,15 +6,16 @@ const countryDetails = (country,callback) => {
     if(error) {
       callback('Unable to connect', undefined)
     }
-    else if(res.error) {
-      callback('Not a country name!')
-    }
-    else {
+    
+    else if(Array.isArray(res.body)){
       for(const element of res.body) {
         data.push({country : element.name, capital : element.capital})
       }
+      callback(undefined,data)
     }
-    callback(undefined,data)
+    else {
+      callback('Not a proper country name',undefined)
+    }
   })
 }
 module.exports = countryDetails
